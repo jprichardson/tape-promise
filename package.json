@@ -5,7 +5,7 @@
   "main": "index.es5.js",
   "scripts": {
     "build": "babel index.babel.js -o index.es5.js",
-    "test": "find ./tests -name *.test.js -exec node --require ./tests/_babel.js {} \\; | tap-spec"
+    "test": "standard && find ./tests -name *.test.js -exec node --require ./tests/_babel.js {} \\; | tap-spec"
   },
   "repository": {
     "type": "git",
@@ -28,10 +28,17 @@
   "homepage": "https://github.com/jprichardson/tape-promise#readme",
   "devDependencies": {
     "babel": "^5.8.29",
+    "standard": "^5.3.1",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.2"
   },
   "dependencies": {
     "onetime": "^1.0.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "index.es5.js"
+    ]
   }
 }
