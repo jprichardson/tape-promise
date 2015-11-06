@@ -1,0 +1,31 @@
+{
+  "name": "tape-promise",
+  "version": "0.0.0",
+  "description": "Promise/async support for tape.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "tape"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jprichardson/tape-promise.git"
+  },
+  "keywords": [
+    "tape",
+    "promise",
+    "async",
+    "test",
+    "testing",
+    "tdd",
+    "unit"
+  ],
+  "author": "JP Richardson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jprichardson/tape-promise/issues"
+  },
+  "homepage": "https://github.com/jprichardson/tape-promise#readme"
+}
