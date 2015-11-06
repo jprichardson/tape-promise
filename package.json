@@ -1,6 +1,6 @@
 {
   "name": "tape-promise",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Promise/async support for tape.",
   "main": "index.es5.js",
   "scripts": {
