@@ -2,11 +2,12 @@
   "name": "tape-promise",
   "version": "0.0.0",
   "description": "Promise/async support for tape.",
-  "main": "index.js",
+  "main": "index.es5.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
+    "build": "babel index.babel.js -o index.es5.js",
     "test": "tape"
   },
   "repository": {
@@ -27,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/jprichardson/tape-promise/issues"
   },
-  "homepage": "https://github.com/jprichardson/tape-promise#readme"
+  "homepage": "https://github.com/jprichardson/tape-promise#readme",
+  "devDependencies": {
+    "babel": "^5.8.29"
+  }
 }
