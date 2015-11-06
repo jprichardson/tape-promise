@@ -1,6 +1,8 @@
 tape-promise
 ============
 
+[![build status](https://api.travis-ci.org/jprichardson/tape-promise.svg)](http://travis-ci.org/jprichardson/tape-promise)
+
 Promise and ES2016 (ES7) `async/await` support for [Tape](https://github.com/substack/tape).
 
 This module assumes that you're familiar with at least the concepts of Promises
