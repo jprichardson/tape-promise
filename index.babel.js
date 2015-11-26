@@ -9,7 +9,7 @@ export default function tapePromiseFactory (tapeTest) {
       try {
         p = testFn(t)
         if (p && p.then && typeof p.then === 'function') {
-          p.then(t.end).catch(t.end)
+          p.then(() => t.end()).catch(t.end)
         }
       } catch (e) {
         t.end(e)
