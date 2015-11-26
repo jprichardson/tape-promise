@@ -1,11 +1,11 @@
 {
   "name": "tape-promise",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Promise/async support for tape.",
   "main": "index.es5.js",
   "scripts": {
     "build": "babel index.babel.js -o index.es5.js",
-    "test": "standard && find ./tests -name *.test.js -exec node --require ./tests/_babel.js {} \\; | tap-spec"
+    "test": "standard && npm run build && find ./tests -name *.test.js -exec node --require ./tests/_babel.js {} \\; | tap-spec"
   },
   "repository": {
     "type": "git",
