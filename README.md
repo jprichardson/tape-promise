@@ -41,6 +41,15 @@ import _test from 'tape-promise'
 const test = _test(tape) // decorate tape
 ```
 
+or, for convenience...
+
+```js
+import test from 'tape-promise/tape'
+```
+
+but you must explicitly have `tape` as a dependency.
+
+
 ### Example (promises)
 
 Just return the promise.
