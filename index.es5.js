@@ -27,6 +27,8 @@ function tapePromiseFactory(tapeTest) {
         }, t.end);
       } catch (e) {
         t.end(e);
+      } finally {
+        process.removeListener('unhandledRejection', t.end);
       }
     });
   }

@@ -11,6 +11,8 @@ export default function tapePromiseFactory (tapeTest) {
         if (isPromise(p)) p.then(() => t.end(), t.end)
       } catch (e) {
         t.end(e)
+      } finally {
+        process.removeListener('unhandledRejection', t.end)
       }
     })
   }
