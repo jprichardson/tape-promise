@@ -1,16 +1,14 @@
 import onetime from 'onetime'
+import isPromise from 'is-promise'
 
 export default function tapePromiseFactory (tapeTest) {
   function testPromise (description, testFn) {
     tapeTest(description, function (t) {
       t.end = onetime(t.end)
       process.once('unhandledRejection', t.end)
-      var p
       try {
-        p = testFn(t)
-        if (p && p.then && typeof p.then === 'function') {
-          p.then(() => t.end()).catch(t.end)
-        }
+        const p = testFn(t)
+        if (isPromise(p)) p.then(() => t.end(), t.end)
       } catch (e) {
         t.end(e)
       }

@@ -9,6 +9,10 @@ var _onetime = require('onetime');
 
 var _onetime2 = _interopRequireDefault(_onetime);
 
+var _isPromise = require('is-promise');
+
+var _isPromise2 = _interopRequireDefault(_isPromise);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function tapePromiseFactory(tapeTest) {
@@ -16,14 +20,11 @@ function tapePromiseFactory(tapeTest) {
     tapeTest(description, function (t) {
       t.end = (0, _onetime2.default)(t.end);
       process.once('unhandledRejection', t.end);
-      var p;
       try {
-        p = testFn(t);
-        if (p && p.then && typeof p.then === 'function') {
-          p.then(function () {
-            return t.end();
-          }).catch(t.end);
-        }
+        var p = testFn(t);
+        if ((0, _isPromise2.default)(p)) p.then(function () {
+          return t.end();
+        }, t.end);
       } catch (e) {
         t.end(e);
       }
