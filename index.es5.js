@@ -1,20 +1,20 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports['default'] = tapePromiseFactory;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+exports.default = tapePromiseFactory;
 
 var _onetime = require('onetime');
 
 var _onetime2 = _interopRequireDefault(_onetime);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function tapePromiseFactory(tapeTest) {
   function testPromise(description, testFn) {
     tapeTest(description, function (t) {
-      t.end = (0, _onetime2['default'])(t.end);
+      t.end = (0, _onetime2.default)(t.end);
       process.once('unhandledRejection', t.end);
       var p;
       try {
@@ -22,7 +22,7 @@ function tapePromiseFactory(tapeTest) {
         if (p && p.then && typeof p.then === 'function') {
           p.then(function () {
             return t.end();
-          })['catch'](t.end);
+          }).catch(t.end);
         }
       } catch (e) {
         t.end(e);
@@ -37,5 +37,3 @@ function tapePromiseFactory(tapeTest) {
 
   return testPromise;
 }
-
-module.exports = exports['default'];
