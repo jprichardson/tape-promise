@@ -2,15 +2,9 @@ import tape from 'tape'
 import _test from '../'
 const test = _test(tape)
 
-function delay (time) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      resolve()
-    }, time)
-  })
-}
+const delay = (time) => new Promise((resolve) => setTimeout(resolve, time))
 
-test('ensure async works', async function (t) {
+test('ensure async works', async (t) => {
   await delay(100)
   t.true(true)
   t.end()
