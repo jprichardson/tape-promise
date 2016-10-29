@@ -5,7 +5,9 @@
   "main": "index.es5.js",
   "scripts": {
     "build": "babel index.babel.js -o index.es5.js",
-    "test": "standard && npm run build && find ./tests -name *.test.js -exec node --require ./tests/_babel.js {} \\; | tap-spec"
+    "lint": "standard",
+    "test": "npm run lint && npm run build && npm run unit",
+    "unit": "find ./tests -name *.test.js -exec node --require ./tests/_babel.js {} \\; | tap-spec"
   },
   "repository": {
     "type": "git",
