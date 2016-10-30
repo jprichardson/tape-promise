@@ -29,7 +29,7 @@ and requires that you pass it in.
 
 ```js
 var tape = require('tape')
-var _test = require('tape-promise')
+var _test = require('tape-promise').default // <---- notice 'default'
 var test = _test(tape) // decorate tape
 ```
 
