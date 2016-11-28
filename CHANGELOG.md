@@ -1,3 +1,7 @@
+2.0.1 / 2016-11-28
+------------------
+- Babel6 upgrade on `require('tape-promise/tape')`
+
 2.0.0 / 2016-10-29
 ------------------
 - babel upgrade (breaking for ES5 commonjs)
