@@ -30,7 +30,7 @@
   "homepage": "https://github.com/jprichardson/tape-promise#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "babel-eslint": "^7.1.0",
+    "babel-eslint": "^8.2.2",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.18.0",
     "standard": "*",
