@@ -1,3 +1,9 @@
+3.0.0 / 2018-03-15
+------------------
+- Drop Node.js 4 & 5 support; Node 6 is now the minimum version
+- Add support for argument swapping, tape options, and support `test.only()` [#12](https://github.com/jprichardson/tape-promise/pull/12)
+- Update babel config
+
 2.0.1 / 2016-11-28
 ------------------
 - Babel6 upgrade on `require('tape-promise/tape')`
