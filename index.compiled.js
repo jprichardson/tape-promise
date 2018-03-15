@@ -3,9 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 exports.default = tapePromiseFactory;
 
 var _onetime = require('onetime');
@@ -20,14 +17,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // From: https://github.com/substack/tape/blob/17276d7473f9d98e37bab47ebdddf74ca1931f43/lib/test.js#L24
 // Modified only for linting
-var getTestArgs = function getTestArgs(name_, opts_, cb_) {
-  var name = '(anonymous)';
-  var opts = {};
-  var cb = void 0;
+const getTestArgs = function getTestArgs(name_, opts_, cb_) {
+  let name = '(anonymous)';
+  let opts = {};
+  let cb;
 
   for (var i = 0; i < arguments.length; i++) {
     var arg = arguments[i];
-    var t = typeof arg === 'undefined' ? 'undefined' : _typeof(arg);
+    var t = typeof arg;
     if (t === 'string') {
       name = arg;
     } else if (t === 'object') {
@@ -40,20 +37,19 @@ var getTestArgs = function getTestArgs(name_, opts_, cb_) {
 };
 
 function tapePromiseFactory(tapeTest) {
-  function testPromise() {
-    var _getTestArgs = getTestArgs.apply(undefined, arguments),
-        name = _getTestArgs.name,
-        opts = _getTestArgs.opts,
-        cb = _getTestArgs.cb;
+  function testPromise(...args) {
+    var _getTestArgs = getTestArgs(...args);
+
+    const name = _getTestArgs.name,
+          opts = _getTestArgs.opts,
+          cb = _getTestArgs.cb;
 
     tapeTest(name, opts, function (t) {
       t.end = (0, _onetime2.default)(t.end);
       process.once('unhandledRejection', t.end);
       try {
-        var p = cb(t);
-        if ((0, _isPromise2.default)(p)) p.then(function () {
-          return t.end();
-        }, t.end);
+        const p = cb(t);
+        if ((0, _isPromise2.default)(p)) p.then(() => t.end(), t.end);
       } catch (e) {
         t.end(e);
       } finally {
@@ -62,7 +58,7 @@ function tapePromiseFactory(tapeTest) {
     });
   }
 
-  Object.keys(tapeTest).forEach(function (key) {
+  Object.keys(tapeTest).forEach(key => {
     if (typeof tapeTest[key] !== 'function') return;
     if (key === 'only') {
       testPromise[key] = tapePromiseFactory(tapeTest[key]);
