@@ -22,7 +22,37 @@ const getTestArgs = function (name_, opts_, cb_) {
   return { name: name, opts: opts, cb: cb }
 }
 
+function registerNewAssertions (Test) {
+  Test.prototype.rejects = function (promise, expected, message = 'should reject', extra) {
+    if (typeof promise === 'function') promise = promise()
+    return promise
+      .then(() => {
+        this.throws(() => {}, expected, message, extra)
+      })
+      .catch(err => {
+        this.throws(() => { throw err }, expected, message, extra)
+      })
+      .then(() => {}) // resolve on failure to not stop execution (assertion is still failing)
+  }
+
+  Test.prototype.doesNotReject = function (promise, expected, message = 'should resolve', extra) {
+    if (typeof promise === 'function') promise = promise()
+    return promise
+      .then(() => {
+        this.doesNotThrow(() => {}, expected, message, extra)
+      })
+      .catch(err => {
+        this.doesNotThrow(() => { throw err }, expected, message, extra)
+      })
+      .then(() => {}) // resolve on failure to not stop execution (assertion is still failing)
+  }
+}
+
 export default function tapePromiseFactory (tapeTest) {
+  const Test = tapeTest.Test
+  // when tapeTest.only() is passed in, Test will be undefined
+  if (Test) registerNewAssertions(Test)
+
   function testPromise (...args) {
     const { name, opts, cb } = getTestArgs(...args)
     tapeTest(name, opts, function (t) {
