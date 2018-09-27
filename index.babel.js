@@ -57,14 +57,20 @@ export default function tapePromiseFactory (tapeTest) {
     const { name, opts, cb } = getTestArgs(...args)
     tapeTest(name, opts, function (t) {
       t.end = onetime(t.end)
+
+      let plan = false
+      const setPlan = () => { plan = true }
+      t.once('plan', setPlan)
+
       process.once('unhandledRejection', t.end)
       try {
         const p = cb(t)
-        if (isPromise(p)) p.then(() => t.end(), t.end)
+        if (isPromise(p) && !plan) p.then(() => t.end(), t.end)
       } catch (e) {
         t.end(e)
       } finally {
         process.removeListener('unhandledRejection', t.end)
+        t.removeListener('plan', setPlan)
       }
     })
   }

@@ -9,3 +9,12 @@ test('ensure async works', async (t) => {
   t.true(true)
   t.end()
 })
+
+test('plan should work when using async', async (t) => {
+  t.plan(2)
+  delay(100)
+    .then(() => {
+      t.true(true)
+      delay(100).then(() => t.true(true))
+    })
+})
