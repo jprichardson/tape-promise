@@ -36,7 +36,35 @@ const getTestArgs = function getTestArgs(name_, opts_, cb_) {
   return { name: name, opts: opts, cb: cb };
 };
 
+function registerNewAssertions(Test) {
+  Test.prototype.rejects = function (promise, expected, message = 'should reject', extra) {
+    if (typeof promise === 'function') promise = promise();
+    return promise.then(() => {
+      this.throws(() => {}, expected, message, extra);
+    }).catch(err => {
+      this.throws(() => {
+        throw err;
+      }, expected, message, extra);
+    }).then(() => {}); // resolve on failure to not stop execution (assertion is still failing)
+  };
+
+  Test.prototype.doesNotReject = function (promise, expected, message = 'should resolve', extra) {
+    if (typeof promise === 'function') promise = promise();
+    return promise.then(() => {
+      this.doesNotThrow(() => {}, expected, message, extra);
+    }).catch(err => {
+      this.doesNotThrow(() => {
+        throw err;
+      }, expected, message, extra);
+    }).then(() => {}); // resolve on failure to not stop execution (assertion is still failing)
+  };
+}
+
 function tapePromiseFactory(tapeTest) {
+  const Test = tapeTest.Test;
+  // when tapeTest.only() is passed in, Test will be undefined
+  if (Test) registerNewAssertions(Test);
+
   function testPromise(...args) {
     var _getTestArgs = getTestArgs(...args);
 
@@ -46,14 +74,22 @@ function tapePromiseFactory(tapeTest) {
 
     tapeTest(name, opts, function (t) {
       t.end = (0, _onetime2.default)(t.end);
+
+      let plan = false;
+      const setPlan = () => {
+        plan = true;
+      };
+      t.once('plan', setPlan);
+
       process.once('unhandledRejection', t.end);
       try {
         const p = cb(t);
-        if ((0, _isPromise2.default)(p)) p.then(() => t.end(), t.end);
+        if ((0, _isPromise2.default)(p) && !plan) p.then(() => t.end(), t.end);
       } catch (e) {
         t.end(e);
       } finally {
         process.removeListener('unhandledRejection', t.end);
+        t.removeListener('plan', setPlan);
       }
     });
   }

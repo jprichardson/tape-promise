@@ -1,3 +1,10 @@
+4.0.0 / 2018-09-27
+------------------
+
+- **BREAKING:** Wait for `t.plan()` assertions to complete before ending async tests ([#15](https://github.com/jprichardson/tape-promise/pull/15))
+- Added: `t.rejects()` assertion ([#14](https://github.com/jprichardson/tape-promise/issues/14), [#16](https://github.com/jprichardson/tape-promise/pull/16))
+- Added: `t.doesNotReject()` assertion ([#16](https://github.com/jprichardson/tape-promise/pull/16))
+
 3.0.0 / 2018-03-15
 ------------------
 - Drop Node.js 4 & 5 support; Node 6 is now the minimum version
