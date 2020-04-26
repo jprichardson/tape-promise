@@ -19,7 +19,7 @@ const getTestArgs = function (name_, opts_, cb_) {
       cb = arg
     }
   }
-  return { name: name, opts: opts, cb: cb }
+  return { name, opts, cb }
 }
 
 function registerNewAssertions (Test) {
